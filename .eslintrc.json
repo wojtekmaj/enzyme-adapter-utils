@@ -1,0 +1,6 @@
+{
+  "extends": "wojtekmaj/react",
+  "rules": {
+    "react/state-in-constructor": "off"
+  }
+}
