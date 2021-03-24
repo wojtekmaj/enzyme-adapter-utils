@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ref } from 'airbnb-prop-types';
 import RootFinder from './RootFinder';
 
 /* eslint-disable react/forbid-prop-types */
@@ -89,7 +88,14 @@ export default function createMountWrapper(node, options = {}) {
     Component: makeValidElementType(adapter).isRequired,
     context: PropTypes.object,
     props: PropTypes.object.isRequired,
-    refProp: PropTypes.oneOfType([PropTypes.string, ref()]),
+    refProp: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.func,
+      PropTypes.shape({
+        // eslint-disable-next-line react/forbid-prop-types
+        current: PropTypes.any,
+      }),
+    ]),
     wrappingComponentProps: PropTypes.object,
   };
   WrapperComponent.defaultProps = {

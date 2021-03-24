@@ -1,9 +1,8 @@
 import React from 'react';
-import { or, explicitNull } from 'airbnb-prop-types';
 import PropTypes from 'prop-types';
 
 const propTypes = {
-  children: or([explicitNull().isRequired, PropTypes.node.isRequired]),
+  children: PropTypes.node,
 };
 
 const defaultProps = {
