@@ -87,10 +87,10 @@ export default function createMountWrapper(node, options = {}) {
   }
   WrapperComponent.propTypes = {
     Component: makeValidElementType(adapter).isRequired,
-    refProp: PropTypes.oneOfType([PropTypes.string, ref()]),
-    props: PropTypes.object.isRequired,
-    wrappingComponentProps: PropTypes.object,
     context: PropTypes.object,
+    props: PropTypes.object.isRequired,
+    refProp: PropTypes.oneOfType([PropTypes.string, ref()]),
+    wrappingComponentProps: PropTypes.object,
   };
   WrapperComponent.defaultProps = {
     refProp: null,
