@@ -9,8 +9,7 @@ const defaultProps = {
   children: undefined,
 };
 
-// eslint-disable-next-line prefer-arrow-callback
-const Wrapper = () => Object.assign(function SimpleSFCWrapper({ children }) {
+const Wrapper = Object.assign(function SimpleSFCWrapper({ children }) {
   return children;
 }, { propTypes, defaultProps });
 
