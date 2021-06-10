@@ -9,9 +9,7 @@ const defaultProps = {
   children: undefined,
 };
 
-const Wrapper = Object.assign(function SimpleSFCWrapper({ children }) {
-  return children;
-}, { propTypes, defaultProps });
+const Wrapper = Object.assign(({ children }) => children, { propTypes, defaultProps });
 
 export default function wrap(element) {
   return <Wrapper>{element}</Wrapper>;
