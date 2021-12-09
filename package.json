@@ -34,7 +34,6 @@
   "dependencies": {
     "function.prototype.name": "^1.1.0",
     "has": "^1.0.0",
-    "object.assign": "^4.1.0",
     "object.fromentries": "^2.0.0",
     "prop-types": "^15.7.0"
   },

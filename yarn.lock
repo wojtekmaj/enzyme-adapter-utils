@@ -1380,7 +1380,6 @@ __metadata:
     eslint-config-wojtekmaj: ^0.5.0
     function.prototype.name: ^1.1.0
     has: ^1.0.0
-    object.assign: ^4.1.0
     object.fromentries: ^2.0.0
     prop-types: ^15.7.0
     react: ^17.0.0
