@@ -58,10 +58,8 @@
     "access": "public"
   },
   "files": [
-    "LICENSE",
-    "README.md",
-    "build/",
-    "src/"
+    "build",
+    "src"
   ],
   "repository": {
     "type": "git",
