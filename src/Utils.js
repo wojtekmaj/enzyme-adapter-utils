@@ -6,18 +6,16 @@ import createRenderWrapper from './createRenderWrapper';
 import wrap from './wrapWithSimpleWrapper';
 import RootFinder from './RootFinder';
 
-export {
-  createMountWrapper,
-  createRenderWrapper,
-  wrap,
-  RootFinder,
-};
+export { createMountWrapper, createRenderWrapper, wrap, RootFinder };
 
-export function mapNativeEventNames(event, {
-  animation = false, // should be true for React 15+
-  pointerEvents = false, // should be true for React 16.4+
-  auxClick = false, // should be true for React 16.5+
-} = {}) {
+export function mapNativeEventNames(
+  event,
+  {
+    animation = false, // should be true for React 15+
+    pointerEvents = false, // should be true for React 16.4+
+    auxClick = false, // should be true for React 16.5+
+  } = {},
+) {
   const nativeToReactEventMap = {
     compositionend: 'compositionEnd',
     compositionstart: 'compositionStart',
@@ -134,10 +132,12 @@ export function nodeTypeFromType(type) {
 }
 
 function getIteratorFn(obj) {
-  const iteratorFn = obj && (
-    (typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol' && obj[Symbol.iterator])
-    || obj['@@iterator']
-  );
+  const iteratorFn =
+    obj &&
+    ((typeof Symbol === 'function' &&
+      typeof Symbol.iterator === 'symbol' &&
+      obj[Symbol.iterator]) ||
+      obj['@@iterator']);
 
   if (typeof iteratorFn === 'function') {
     return iteratorFn;
@@ -196,17 +196,12 @@ export function ensureKeyOrUndefined(key) {
 export function elementToTree(el, recurse = elementToTree) {
   if (typeof recurse !== 'function' && arguments.length === 3) {
     // special case for backwards compat for `.map(elementToTree)`
-    recurse = elementToTree; // eslint-disable-line no-param-reassign
+    recurse = elementToTree;
   }
   if (el === null || typeof el !== 'object' || !('type' in el)) {
     return el;
   }
-  const {
-    type,
-    props,
-    key,
-    ref,
-  } = el;
+  const { type, props, key, ref } = el;
   const { children } = props;
   let rendered = null;
   if (isArrayLike(children)) {
@@ -254,7 +249,11 @@ export function findElement(el, predicate) {
   }
   const { rendered } = el;
   if (isArrayLike(rendered)) {
-    return mapFind(rendered, (x) => findElement(x, predicate), (x) => typeof x !== 'undefined');
+    return mapFind(
+      rendered,
+      (x) => findElement(x, predicate),
+      (x) => typeof x !== 'undefined',
+    );
   }
   return findElement(rendered, predicate);
 }
@@ -275,18 +274,17 @@ export function getComponentStack(
   getNodeType = nodeTypeFromType,
   getDisplayName = displayNameOfNode,
 ) {
-  const tuples = hierarchy.filter((node) => node.type !== RootFinder).map((x) => [
-    getNodeType(x.type),
-    getDisplayName(x),
-  ]).concat([[
-    'class',
-    'WrapperComponent',
-  ]]);
+  const tuples = hierarchy
+    .filter((node) => node.type !== RootFinder)
+    .map((x) => [getNodeType(x.type), getDisplayName(x)])
+    .concat([['class', 'WrapperComponent']]);
 
-  return tuples.map(([, name], i, arr) => {
-    const [, closestComponent] = arr.slice(i + 1).find(([nodeType]) => nodeType !== 'host') || [];
-    return `\n    in ${name}${closestComponent ? ` (created by ${closestComponent})` : ''}`;
-  }).join('');
+  return tuples
+    .map(([, name], i, arr) => {
+      const [, closestComponent] = arr.slice(i + 1).find(([nodeType]) => nodeType !== 'host') || [];
+      return `\n    in ${name}${closestComponent ? ` (created by ${closestComponent})` : ''}`;
+    })
+    .join('');
 }
 
 export function simulateError(
@@ -388,11 +386,13 @@ export function spyMethod(instance, methodName, getStub = () => {}) {
   Object.defineProperty(instance, methodName, {
     configurable: true,
     enumerable: !descriptor || !!descriptor.enumerable,
-    value: getStub(originalMethod) || function spied(...args) {
-      const result = originalMethod.apply(this, args);
-      lastReturnValue = result;
-      return result;
-    },
+    value:
+      getStub(originalMethod) ||
+      function spied(...args) {
+        const result = originalMethod.apply(this, args);
+        lastReturnValue = result;
+        return result;
+      },
   });
   return {
     restore() {
@@ -400,14 +400,10 @@ export function spyMethod(instance, methodName, getStub = () => {}) {
         if (descriptor) {
           Object.defineProperty(instance, methodName, descriptor);
         } else {
-          /* eslint-disable no-param-reassign */
           instance[methodName] = originalMethod;
-          /* eslint-enable no-param-reassign */
         }
       } else {
-        /* eslint-disable no-param-reassign */
         delete instance[methodName];
-        /* eslint-enable no-param-reassign */
       }
     },
     getLastReturnValue() {
@@ -426,21 +422,25 @@ export function spyProperty(instance, propertyName, handlers = {}) {
   }
   let wasAssigned = false;
   let holder = originalValue;
-  const getV = handlers.get ? () => {
-    const value = descriptor && descriptor.get ? descriptor.get.call(instance) : holder;
-    return handlers.get.call(instance, value);
-  } : () => holder;
-  const set = handlers.set ? (newValue) => {
-    wasAssigned = true;
-    const handlerNewValue = handlers.set.call(instance, holder, newValue);
-    holder = handlerNewValue;
-    if (descriptor && descriptor.set) {
-      descriptor.set.call(instance, holder);
-    }
-  } : (v) => {
-    wasAssigned = true;
-    holder = v;
-  };
+  const getV = handlers.get
+    ? () => {
+        const value = descriptor && descriptor.get ? descriptor.get.call(instance) : holder;
+        return handlers.get.call(instance, value);
+      }
+    : () => holder;
+  const set = handlers.set
+    ? (newValue) => {
+        wasAssigned = true;
+        const handlerNewValue = handlers.set.call(instance, holder, newValue);
+        holder = handlerNewValue;
+        if (descriptor && descriptor.set) {
+          descriptor.set.call(instance, holder);
+        }
+      }
+    : (v) => {
+        wasAssigned = true;
+        holder = v;
+      };
   Object.defineProperty(instance, propertyName, {
     configurable: true,
     enumerable: !descriptor || !!descriptor.enumerable,
@@ -454,14 +454,10 @@ export function spyProperty(instance, propertyName, handlers = {}) {
         if (descriptor) {
           Object.defineProperty(instance, propertyName, descriptor);
         } else {
-          /* eslint-disable no-param-reassign */
           instance[propertyName] = holder;
-          /* eslint-enable no-param-reassign */
         }
       } else {
-        /* eslint-disable no-param-reassign */
         delete instance[propertyName];
-        /* eslint-enable no-param-reassign */
       }
     },
     wasAssigned() {

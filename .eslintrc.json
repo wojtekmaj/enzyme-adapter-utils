@@ -1,6 +1,3 @@
 {
-  "extends": "wojtekmaj/react",
-  "rules": {
-    "react/state-in-constructor": "off"
-  }
+  "extends": "wojtekmaj/react-no-automatic-runtime"
 }
