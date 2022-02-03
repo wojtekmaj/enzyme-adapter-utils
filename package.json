@@ -28,7 +28,9 @@
     "mocha"
   ],
   "author": "Jordan Harband <ljharb@gmail.com>",
-  "contributors": ["Wojciech Maj <kontakt@wojtekmaj.pl>"],
+  "contributors": [
+    "Wojciech Maj <kontakt@wojtekmaj.pl>"
+  ],
   "license": "MIT",
   "dependencies": {
     "function.prototype.name": "^1.1.0",
@@ -61,7 +63,8 @@
     "access": "public"
   },
   "files": [
-    "build", "src"
+    "build",
+    "src"
   ],
   "repository": {
     "type": "git",
