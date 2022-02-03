@@ -8,14 +8,7 @@ import RootFinder from './RootFinder';
 
 export { createMountWrapper, createRenderWrapper, wrap, RootFinder };
 
-export function mapNativeEventNames(
-  event,
-  {
-    animation = false, // should be true for React 15+
-    pointerEvents = false, // should be true for React 16.4+
-    auxClick = false, // should be true for React 16.5+
-  } = {},
-) {
+export function mapNativeEventNames(event) {
   const nativeToReactEventMap = {
     compositionend: 'compositionEnd',
     compositionstart: 'compositionStart',
@@ -54,26 +47,20 @@ export function mapNativeEventNames(
     mouseenter: 'mouseEnter',
     mouseleave: 'mouseLeave',
     transitionend: 'transitionEnd',
-    ...(animation && {
-      animationstart: 'animationStart',
-      animationiteration: 'animationIteration',
-      animationend: 'animationEnd',
-    }),
-    ...(pointerEvents && {
-      pointerdown: 'pointerDown',
-      pointermove: 'pointerMove',
-      pointerup: 'pointerUp',
-      pointercancel: 'pointerCancel',
-      gotpointercapture: 'gotPointerCapture',
-      lostpointercapture: 'lostPointerCapture',
-      pointerenter: 'pointerEnter',
-      pointerleave: 'pointerLeave',
-      pointerover: 'pointerOver',
-      pointerout: 'pointerOut',
-    }),
-    ...(auxClick && {
-      auxclick: 'auxClick',
-    }),
+    animationstart: 'animationStart',
+    animationiteration: 'animationIteration',
+    animationend: 'animationEnd',
+    pointerdown: 'pointerDown',
+    pointermove: 'pointerMove',
+    pointerup: 'pointerUp',
+    pointercancel: 'pointerCancel',
+    gotpointercapture: 'gotPointerCapture',
+    lostpointercapture: 'lostPointerCapture',
+    pointerenter: 'pointerEnter',
+    pointerleave: 'pointerLeave',
+    pointerover: 'pointerOver',
+    pointerout: 'pointerOut',
+    auxclick: 'auxClick',
   };
 
   return nativeToReactEventMap[event] || event;
@@ -81,8 +68,8 @@ export function mapNativeEventNames(
 
 // 'click' => 'onClick'
 // 'mouseEnter' => 'onMouseEnter'
-export function propFromEvent(event, eventOptions = {}) {
-  const nativeEvent = mapNativeEventNames(event, eventOptions);
+export function propFromEvent(event) {
+  const nativeEvent = mapNativeEventNames(event);
   return `on${nativeEvent[0].toUpperCase()}${nativeEvent.slice(1)}`;
 }
 
